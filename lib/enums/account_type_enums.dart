@@ -49,6 +49,9 @@ enum AccountTypeEnums {
   expensive_traffic_oil(id: 532000, name: "加油费"),
   expensive_traffic_pass(id: 533000, name: "高速费/过路费"),
   expensive_utilities(id: 540000, name: "水电燃气费"),
+  expensive_utilities_water(id: 541000, name: "水费"),
+  expensive_utilities_electricity(id: 542000, name: "电费"),
+  expensive_utilities_gas(id: 543000, name: "燃气费"),
   //医疗
   expensive_health(id: 550000, name: "健康保健医疗"),
   //税
