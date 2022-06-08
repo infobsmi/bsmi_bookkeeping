@@ -56,7 +56,9 @@ enum AccountTypeEnums {
   //保险
   expensive_insurance(id: 570000, name: "保险"),
   //娱乐
-  expensive_entertainment(id: 580000, name: "休闲娱乐");
+  expensive_entertainment(id: 580000, name: "休闲娱乐"),
+  expensive_entertainment_game(id: 581000, name: "网游购买"),
+  expensive_entertainment_game_credit(id: 582000, name: "网游充值");
   //TODO: 线上娱乐，
 
   const AccountTypeEnums({
