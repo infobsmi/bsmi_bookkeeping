@@ -60,6 +60,7 @@ class _BookingHomeState extends State<BookingHome> {
               children: [
                 Text('金额:'),
                 TextFormField(
+                  autofocus: true,
                   keyboardType: const TextInputType.numberWithOptions(signed:false, decimal: true),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
