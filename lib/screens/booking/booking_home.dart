@@ -33,6 +33,8 @@ class _BookingHomeState extends State<BookingHome> {
   }
 
   final _formKey = GlobalKey<FormState>();
+  String dropdownValue = 'One';
+  String dropdownValue2 = 'Two';
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +58,7 @@ class _BookingHomeState extends State<BookingHome> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '金额:'
-                ),
+                Text('金额:'),
                 TextFormField(
                   // The validator receives the text that the user has entered.
                   validator: (value) {
@@ -68,29 +68,52 @@ class _BookingHomeState extends State<BookingHome> {
                     return null;
                   },
                 ),
-                Text(
-                    'Debits[借方账户]:'
-                ),
-                TextFormField(
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
+                Text('Debits[借方账户]:'),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
                   },
+                  items: <String>['One', 'Two', 'Free', 'Four']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-                Text(
-                    'Credits[贷方账户]:'
-                ),
-                TextFormField(
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
+                Text('Credits[贷方账户]:'),
+
+                DropdownButton<String>(
+                  value: dropdownValue2,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValue2 = newValue!;
+                    });
                   },
+                  items: <String>['One', 'Two', 'Free', 'Four']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -111,7 +134,6 @@ class _BookingHomeState extends State<BookingHome> {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
