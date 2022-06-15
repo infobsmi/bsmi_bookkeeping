@@ -35,7 +35,7 @@ class _BookingHomeState extends State<BookingHome> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  int dropdownValue = AccountTypeEnums.assets.id;
+  int dropdownValue = AccountTypeEnums.expensive.id;
   int dropdownValue2 = AccountTypeEnums.assets.id;
 
   @override
@@ -53,87 +53,98 @@ class _BookingHomeState extends State<BookingHome> {
           title: Text(widget.title),
         ),
         body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('金额:'),
-                TextFormField(
-                  autofocus: true,
-                  keyboardType: const TextInputType.numberWithOptions(signed:false, decimal: true),
-                  // The validator receives the text that the user has entered.
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                Text('Debits[借方账户]:'),
-                DropdownButton<int>(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (int? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
-                    });
-                  },
-                  items: getAccountAsList(),
-                ),
-                Text('Credits[贷方账户]:'),
+          child: Container(
+            margin: const EdgeInsets.all(1),
+            padding: const EdgeInsets.all(8.0),
 
-                DropdownButton<int>(
-                  value: dropdownValue2,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (int? newValue) {
-                    setState(() {
-                      dropdownValue2 = newValue!;
-                    });
-                  },
-                  items: getAccountAsList(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Validate returns true if the form is valid, or false otherwise.
-                      if (_formKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('金额:'),
+                  TextFormField(
+                    autofocus: true,
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: false, decimal: true),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
                       }
+                      return null;
                     },
-                    child: const Text('Submit'),
                   ),
-                ),
-              ],
+                  Text('Debits[借方账户]:'),
+                  DropdownButton<int>(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: getAccountAsList(),
+                  ),
+                  Text('Credits[贷方账户]:'),
+                  DropdownButton<int>(
+                    value: dropdownValue2,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 1,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        dropdownValue2 = newValue!;
+                      });
+                    },
+                    items: getAccountAsList(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ));
   }
 
   List<DropdownMenuItem<int>> getAccountAsList() {
-
     List<DropdownMenuItem<int>> ddList = [];
     AccountTypeEnums.values.forEach((element) {
-      ddList.add(new DropdownMenuItem(child: Text(element.name), value: element.id));
+      ddList.add(DropdownMenuItem(
+        value: element.id,
+        enabled: element.lv == 1 ? false : true,
+        child: Container(
+          padding: EdgeInsets.only(left: (element.lv - 1) * 20),
+          child: Text(element.name),
+        ),
+      ));
     });
 
     return ddList;
