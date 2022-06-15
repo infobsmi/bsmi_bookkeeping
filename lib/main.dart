@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'arguments/home_screen_arguments.dart';
+import "screens/booking/booking_home.dart";
 
 void main() {
   runApp(const MyApp());
@@ -11,25 +13,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BSMI簿记',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'BSMI簿记'),
-    );
+        title: 'BSMI簿记',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: MyHomePage.routeName,
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          MyHomePage.routeName: (context) => const MyHomePage(title: 'BSMI簿记'),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          BookingHome.routeName: (context) => const BookingHome(title: "记账"),
+        });
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  /**
+   * "/"
+   */
+  static var routeName = "/";
+
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -63,6 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)!.settings.arguments as HomeScreenArguments?;
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -95,12 +110,20 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+             Text(
+              args?.name ?? "welcome",
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
+            ),
+            ElevatedButton(
+              // Within the `FirstScreen` widget
+              onPressed: () {
+                // Navigate to the second screen using a named route.
+                Navigator.pushNamed(context, '/booking');
+              },
+              child: const Text('开始记账'),
             ),
           ],
         ),
