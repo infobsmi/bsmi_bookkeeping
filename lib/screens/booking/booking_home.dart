@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import '../../enums/account_type_enums.dart';
 
 class BookingHome extends StatefulWidget {
+  /**
+   * /booking
+   */
+  static var routeName = '/booking';
+
   const BookingHome({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -21,31 +26,14 @@ class BookingHome extends StatefulWidget {
 }
 
 class _BookingHomeState extends State<BookingHome> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   final _formKey = GlobalKey<FormState>();
+
   int dropdownValue = AccountTypeEnums.expensive.id;
   int dropdownValue2 = AccountTypeEnums.assets.id;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -78,15 +66,11 @@ class _BookingHomeState extends State<BookingHome> {
                     },
                   ),
                   Text('Debits[借方账户]:'),
-                  DropdownButton<int>(
+                  DropdownButtonFormField<int>(
                     value: dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
                     onChanged: (int? newValue) {
                       setState(() {
                         dropdownValue = newValue!;
@@ -95,15 +79,11 @@ class _BookingHomeState extends State<BookingHome> {
                     items: getAccountAsList(),
                   ),
                   Text('Credits[贷方账户]:'),
-                  DropdownButton<int>(
+                  DropdownButtonFormField<int>(
                     value: dropdownValue2,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 1,
-                      color: Colors.deepPurpleAccent,
-                    ),
                     onChanged: (int? newValue) {
                       setState(() {
                         dropdownValue2 = newValue!;
@@ -120,11 +100,13 @@ class _BookingHomeState extends State<BookingHome> {
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
+                            const SnackBar(content: Text('正在记账')),
                           );
+                          //TODO 记账，写入数据库
+
                         }
                       },
-                      child: const Text('Submit'),
+                      child: const Text('记账'),
                     ),
                   ),
                 ],

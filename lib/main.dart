@@ -12,31 +12,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BSMI簿记',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-        initialRoute: '/',
+        title: 'BSMI簿记',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: MyHomePage.routeName,
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
-          '/': (context) => const MyHomePage(title: 'BSMI簿记'),
+          MyHomePage.routeName: (context) => const MyHomePage(title: 'BSMI簿记'),
           // When navigating to the "/second" route, build the SecondScreen widget.
-          '/booking': (context) => const BookingHome(title: "记账"),
-        }
-    );
+          BookingHome.routeName: (context) => const BookingHome(title: "记账"),
+        });
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  /**
+   * "/"
+   */
+  static var routeName = "/";
+
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
