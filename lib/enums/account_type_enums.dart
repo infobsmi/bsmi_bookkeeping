@@ -7,7 +7,7 @@ enum AccountTypeEnums {
   tenpay(id: 100001, name: "腾讯支付"),
   alipay(id: 100002, name: "支付宝"),
   unionpay(id: 100003, name: "云闪付"),
-  bank(id: 100003, name: "银行账户"),
+  bank(id: 100004, name: "银行账户"),
 
   equity(id: 200000, name:"权益"),
   stock(id: 200001, name: "股票账户"),

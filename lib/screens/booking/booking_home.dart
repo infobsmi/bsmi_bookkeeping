@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../enums/account_type_enums.dart';
+
 class BookingHome extends StatefulWidget {
   const BookingHome({Key? key, required this.title}) : super(key: key);
 
@@ -33,8 +35,8 @@ class _BookingHomeState extends State<BookingHome> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  String dropdownValue = 'One';
-  String dropdownValue2 = 'Two';
+  int dropdownValue = AccountTypeEnums.assets.id;
+  int dropdownValue2 = AccountTypeEnums.assets.id;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class _BookingHomeState extends State<BookingHome> {
                   },
                 ),
                 Text('Debits[借方账户]:'),
-                DropdownButton<String>(
+                DropdownButton<int>(
                   value: dropdownValue,
                   icon: const Icon(Icons.arrow_downward),
                   elevation: 16,
@@ -80,22 +82,16 @@ class _BookingHomeState extends State<BookingHome> {
                     height: 2,
                     color: Colors.deepPurpleAccent,
                   ),
-                  onChanged: (String? newValue) {
+                  onChanged: (int? newValue) {
                     setState(() {
                       dropdownValue = newValue!;
                     });
                   },
-                  items: <String>['One', 'Two', 'Free', 'Four']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: getAccountAsList(),
                 ),
                 Text('Credits[贷方账户]:'),
 
-                DropdownButton<String>(
+                DropdownButton<int>(
                   value: dropdownValue2,
                   icon: const Icon(Icons.arrow_downward),
                   elevation: 16,
@@ -104,18 +100,12 @@ class _BookingHomeState extends State<BookingHome> {
                     height: 2,
                     color: Colors.deepPurpleAccent,
                   ),
-                  onChanged: (String? newValue) {
+                  onChanged: (int? newValue) {
                     setState(() {
                       dropdownValue2 = newValue!;
                     });
                   },
-                  items: <String>['One', 'Two', 'Free', 'Four']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items: getAccountAsList(),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -137,5 +127,15 @@ class _BookingHomeState extends State<BookingHome> {
             ),
           ),
         ));
+  }
+
+  List<DropdownMenuItem<int>> getAccountAsList() {
+
+    List<DropdownMenuItem<int>> ddList = [];
+    AccountTypeEnums.values.forEach((element) {
+      ddList.add(new DropdownMenuItem(child: Text(element.name), value: element.id));
+    });
+
+    return ddList;
   }
 }
