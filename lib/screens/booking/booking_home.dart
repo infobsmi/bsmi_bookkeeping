@@ -1,3 +1,5 @@
+import 'package:bsmi_bookkeeping/arguments/home_screen_arguments.dart';
+import 'package:bsmi_bookkeeping/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/account_type_enums.dart';
@@ -103,7 +105,7 @@ class _BookingHomeState extends State<BookingHome> {
                             const SnackBar(content: Text('正在记账')),
                           );
                           //TODO 记账，写入数据库
-
+                          Navigator.pushNamed(context, MyHomePage.routeName, arguments: HomeScreenArguments(1, "hello world"));
                         }
                       },
                       child: const Text('记账'),

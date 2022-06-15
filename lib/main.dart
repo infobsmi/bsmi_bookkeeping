@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'arguments/home_screen_arguments.dart';
 import "screens/booking/booking_home.dart";
 
 void main() {
@@ -74,6 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)!.settings.arguments as HomeScreenArguments?;
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -106,8 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+             Text(
+              args?.name ?? "welcome",
             ),
             Text(
               '$_counter',
