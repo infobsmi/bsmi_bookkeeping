@@ -1,3 +1,4 @@
+import 'package:bsmi_bookkeeping/utils/database_utils.dart';
 import 'package:flutter/material.dart';
 import 'arguments/home_screen_arguments.dart';
 import "screens/booking/booking_home.dart";
@@ -62,6 +63,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  String sqliteVersionStr = "";
+
+  void updateSqliteVersionStr(Future<String?> newStr) {
+    newStr.then((value) => setState(() {
+      sqliteVersionStr = value ?? "ok";
+    }));
+  }
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -77,6 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     final args = ModalRoute.of(context)!.settings.arguments as HomeScreenArguments?;
+
+
+    var db = DatabaseUtils.instance;
+    Future<String?> vv =  db.sqliteVersion();
+    updateSqliteVersionStr(vv);
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -110,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              sqliteVersionStr
+            ),
              Text(
               args?.name ?? "welcome",
             ),
