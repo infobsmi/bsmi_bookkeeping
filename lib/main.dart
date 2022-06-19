@@ -1,10 +1,17 @@
-import 'package:bsmi_bookkeeping/utils/database_utils.dart';
+import 'package:bsmi_bookkeeping/database/my_database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'arguments/home_screen_arguments.dart';
 import "screens/booking/booking_home.dart";
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      Provider<MyDatabase>(
+        create: (context) => MyDatabase(),
+        child: MyApp(),
+        dispose: (context, db) => db.close(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -87,8 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final args = ModalRoute.of(context)!.settings.arguments as HomeScreenArguments?;
 
 
-    var db = DatabaseUtils.instance;
-    Future<String?> vv =  db.sqliteVersion();
+    var db = Provider.of<MyDatabase>(context);
+    Future<String?> vv =  db.getSqliteVersion().getSingle();
     updateSqliteVersionStr(vv);
 
     // This method is rerun every time setState is called, for instance as done
